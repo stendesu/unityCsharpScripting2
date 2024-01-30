@@ -92,6 +92,12 @@ public class TopDownCharacterController : MonoBehaviour
 
             //And set the speed to 1, so they move!
             playerSpeed = 1f;
+
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+                animator.SetTrigger("Rolling");
+
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("rollTree"))
+                playerSpeed = 1.5f;
         }
         else
         {
