@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586665311478788021}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3147932414328729026}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: -90, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5170514309851591350
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 3126218253287609360}
   - component: {fileID: 4102822930654109023}
   - component: {fileID: -2968571875232970565}
+  - component: {fileID: -9177458077019642930}
   m_Layer: 0
   m_Name: NavMeshEnemy
   m_TagString: Untagged
@@ -234,6 +235,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3780921e46a215941a22fe7fd50f59fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerInSight: 0
   m_target: {fileID: 0}
   m_enemyStates: 0
+--- !u!114 &-9177458077019642930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5377811418319204792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e39f6090724e4a4a8aadeb042afa2bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

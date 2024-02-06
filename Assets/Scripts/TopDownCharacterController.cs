@@ -62,7 +62,13 @@ public class TopDownCharacterController : MonoBehaviour
 
         if (bulletToSpawn.GetComponent<Rigidbody2D>() != null)
         {
-            bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(mousePointOnScreen.normalized * m_projectileSpeed, ForceMode2D.Impulse);
+            //vector from: transform.position -> mousepointonscreen
+            mousePointOnScreen.z = 0;
+
+            //vector
+            Vector2 shootDir = (mousePointOnScreen - transform.position).normalized;
+
+            bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(shootDir * m_projectileSpeed, ForceMode2D.Impulse);
         }
 
 

@@ -16,7 +16,7 @@ public class menuManager : MonoBehaviour
 
     public void LoadLevel1()
     {
-        SceneManager.LoadScene("Level1", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Level0", LoadSceneMode.Additive);
         canvas.SetActive(false);
     }
 
