@@ -7,12 +7,14 @@ public class SimpleNavMeshFollow : MonoBehaviour
 {
     public Transform m_target;
     NavMeshAgent m_agent;
+    bool calledDelay = false;
 
     public enum EnemyState
     {
         Idle,
         MoveToPlayer,
-        Attack
+        Attack,
+        AtkOnCooldown
     };
 
     public EnemyState m_enemyStates;
@@ -62,6 +64,7 @@ public class SimpleNavMeshFollow : MonoBehaviour
     private void idle()
     {
         gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+        Debug.Log("idling");
     }
 
     private void moveToPlayer()
@@ -69,24 +72,58 @@ public class SimpleNavMeshFollow : MonoBehaviour
         if (Vector2.Distance(transform.position, m_target.position) >= m_agent.stoppingDistance)
         {
             m_agent.SetDestination(m_target.position);
+            // enables movement
             gameObject.GetComponent<NavMeshAgent>().isStopped = false;
+            Debug.Log("moving to player");
         }
         else
         {
+            Debug.Log("calling attack");
             m_enemyStates = EnemyState.Attack;
         }
     }
 
+
+
     private void attack()
     {
-        if (Vector2.Distance(transform.position, m_target.position) <= m_agent.stoppingDistance)
+
+        bool canAttack = true;
+
+        if (Vector2.Distance(transform.position, m_target.position) <= m_agent.stoppingDistance && canAttack)
         {
-            Debug.Log("attack");
+            // attack once
+            bool afterAttack = false;
+            if (!afterAttack)
+            {
+                canAttack = false;
+                Debug.Log("attack");
+                afterAttack = true;
+                calledDelay = false;
+                m_enemyStates = EnemyState.AtkOnCooldown;
+            }
         }
-        else
+    }
+        
+
+    private void AtkCooldown()
+    {
+        if (!calledDelay)
         {
-            m_enemyStates = EnemyState.MoveToPlayer;
+            calledDelay = true;
+            GetComponent<NavMeshAgent>().isStopped = true;
+            Debug.Log("calling delay");
+            StartCoroutine (SetAtkCooldown(3));
+            Debug.Log("delay called");
         }
+
+    }
+    private IEnumerator SetAtkCooldown(float atkDelay)
+    {
+        Debug.Log("yielding");
+        yield return new WaitForSeconds(atkDelay);
+        Debug.Log("yielded");
+        m_enemyStates = EnemyState.MoveToPlayer;
     }
 
     // Start is called before the first frame update
@@ -110,6 +147,9 @@ public class SimpleNavMeshFollow : MonoBehaviour
                 break;
             case EnemyState.Attack:
                 attack();
+                break;
+            case EnemyState.AtkOnCooldown: 
+                AtkCooldown();
                 break;
             default:
                 break;

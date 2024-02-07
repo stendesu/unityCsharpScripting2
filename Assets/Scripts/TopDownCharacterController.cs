@@ -62,10 +62,7 @@ public class TopDownCharacterController : MonoBehaviour
 
         if (bulletToSpawn.GetComponent<Rigidbody2D>() != null)
         {
-            //vector from: transform.position -> mousepointonscreen
             mousePointOnScreen.z = 0;
-
-            //vector
             Vector2 shootDir = (mousePointOnScreen - transform.position).normalized;
 
             bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(shootDir * m_projectileSpeed, ForceMode2D.Impulse);
@@ -75,7 +72,7 @@ public class TopDownCharacterController : MonoBehaviour
     }
     void getMousePos()
     {
-        mousePointOnScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePointOnScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);   
     }
 
     /// <summary>
