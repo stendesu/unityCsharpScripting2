@@ -83,11 +83,8 @@ public class SimpleNavMeshFollow : MonoBehaviour
         }
     }
 
-
-
     private void attack()
     {
-
         bool canAttack = true;
 
         if (Vector2.Distance(transform.position, m_target.position) <= m_agent.stoppingDistance && canAttack)
@@ -105,7 +102,6 @@ public class SimpleNavMeshFollow : MonoBehaviour
         }
     }
         
-
     private void AtkCooldown()
     {
         if (!calledDelay)
@@ -118,6 +114,7 @@ public class SimpleNavMeshFollow : MonoBehaviour
         }
 
     }
+
     private IEnumerator SetAtkCooldown(float atkDelay)
     {
         Debug.Log("yielding");
