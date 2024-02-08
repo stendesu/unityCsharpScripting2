@@ -13,6 +13,12 @@ public class SimpleNavMeshFollow : MonoBehaviour
     public Transform sprite;
     public float projectileSpeed = 20.0f;
     public GameObject bulletPrefab;
+    public GameObject projectileSpawnPos;
+    public Sprite targetSprite;
+    public GameObject enemySprite;
+    public SpriteRenderer spriteRenderer;
+
+    public bool isMelee = false;
 
     public enum EnemyState
     {
@@ -24,6 +30,20 @@ public class SimpleNavMeshFollow : MonoBehaviour
     };
 
     public EnemyState m_enemyStates;
+
+    private void checkEnemyType()
+    {
+        if (!isMelee)
+        {
+            float randRange = Random.Range(5f, 8f);
+            stopDistance = randRange;
+        }
+        else
+        {
+            float randRange = Random.Range(3f, 4f);
+            stopDistance = randRange;
+        }
+    }
 
     private void facePlayer()
     {
@@ -93,10 +113,10 @@ public class SimpleNavMeshFollow : MonoBehaviour
             bool afterAttack = false;
             if (!afterAttack)   //  actual attack event
             {
-                GameObject spawnProjectile = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                GameObject spawnProjectile = Instantiate(bulletPrefab, projectileSpawnPos.transform.position, Quaternion.identity);
                 Debug.Log("attacked");
                 canAttack = false;
-                Vector2 shootDir = (m_target.position - transform.position).normalized;
+                Vector2 shootDir = (m_target.position - projectileSpawnPos.transform.position).normalized;
                 spawnProjectile.GetComponent<Rigidbody2D>().AddForce(shootDir * projectileSpeed, ForceMode2D.Impulse);
 
 
@@ -113,9 +133,8 @@ public class SimpleNavMeshFollow : MonoBehaviour
         {
             calledDelay = true;
             GetComponent<NavMeshAgent>().isStopped = true;
-            //Debug.Log("calling delay");
-            StartCoroutine (SetAtkCooldown(3));
-            //Debug.Log("delay called");
+            float randRange = Random.Range(0.8f, 3.2f);
+            StartCoroutine (SetAtkCooldown(randRange));
         }
 
     }
@@ -129,13 +148,20 @@ public class SimpleNavMeshFollow : MonoBehaviour
         m_enemyStates = EnemyState.MoveToPlayer;
     }
 
+    private void updateSprite()
+    {
+        spriteRenderer = enemySprite.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = targetSprite;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         m_agent = GetComponent<NavMeshAgent>();
         m_agent.stoppingDistance = stopDistance;
         currentHp = maxHp;
-
+        checkEnemyType();
+        updateSprite(); 
     }
 
 
