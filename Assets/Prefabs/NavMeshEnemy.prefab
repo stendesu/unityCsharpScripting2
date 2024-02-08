@@ -365,6 +365,8 @@ MonoBehaviour:
   maxHp: 300
   stopDistance: 6
   sprite: {fileID: 2983763026379284595}
+  projectileSpeed: 20
+  bulletPrefab: {fileID: 1502906947489588797, guid: f7aed45f063b6ba429e33d9dc5140695, type: 3}
   m_enemyStates: 0
 --- !u!114 &-9177458077019642930
 MonoBehaviour:
@@ -468,4 +470,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776e152e1ace20241a5017e1d1296d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySelf: {fileID: 0}
+  enemySelf: {fileID: 5377811418319204792}

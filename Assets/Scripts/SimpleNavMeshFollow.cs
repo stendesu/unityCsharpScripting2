@@ -11,6 +11,8 @@ public class SimpleNavMeshFollow : MonoBehaviour
     public float currentHp, maxHp = 300.0f;
     [SerializeField] float stopDistance;
     public Transform sprite;
+    public float projectileSpeed = 20.0f;
+    public GameObject bulletPrefab;
 
     public enum EnemyState
     {
@@ -26,14 +28,18 @@ public class SimpleNavMeshFollow : MonoBehaviour
     private void facePlayer()
     {
         //  if enemy is facing left by default
-        if (m_target.transform.position.x > transform.position.x)
+        if (m_target != null)
         {
-            sprite.transform.localEulerAngles = new Vector3(0, 180, 0);
+            if (m_target.transform.position.x > transform.position.x)
+            {
+                sprite.transform.localEulerAngles = new Vector3(0, 180, 0);
+            }
+            else
+            {
+                sprite.transform.localEulerAngles = new Vector3(0, 0, 0);
+            }
         }
-        else
-        {
-            sprite.transform.localEulerAngles = new Vector3(0, 0, 0);
-        }
+
     }
 
     public void takeDamage(float damage)
@@ -59,18 +65,22 @@ public class SimpleNavMeshFollow : MonoBehaviour
 
     private void moveToPlayer()
     {
-        if (Vector2.Distance(transform.position, m_target.position) >= m_agent.stoppingDistance)
+        if (m_target != null)
         {
-            m_agent.SetDestination(m_target.position);
-            // enables movement
-            gameObject.GetComponent<NavMeshAgent>().isStopped = false;
-            //Debug.Log("moving to player");
+            if (Vector2.Distance(transform.position, m_target.position) >= m_agent.stoppingDistance)
+            {
+                m_agent.SetDestination(m_target.position);
+                // enables movement
+                gameObject.GetComponent<NavMeshAgent>().isStopped = false;
+                //Debug.Log("moving to player");
+            }
+            else
+            {
+                //Debug.Log("calling attack");
+                m_enemyStates = EnemyState.Attack;
+            }
         }
-        else
-        {
-            //Debug.Log("calling attack");
-            m_enemyStates = EnemyState.Attack;
-        }
+        
     }
 
     private void attack()
@@ -81,10 +91,15 @@ public class SimpleNavMeshFollow : MonoBehaviour
         {
             // attack once
             bool afterAttack = false;
-            if (!afterAttack)
+            if (!afterAttack)   //  actual attack event
             {
+                GameObject spawnProjectile = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                Debug.Log("attacked");
                 canAttack = false;
-                //Debug.Log("attack");
+                Vector2 shootDir = (m_target.position - transform.position).normalized;
+                spawnProjectile.GetComponent<Rigidbody2D>().AddForce(shootDir * projectileSpeed, ForceMode2D.Impulse);
+
+
                 afterAttack = true;
                 calledDelay = false;
                 m_enemyStates = EnemyState.AtkOnCooldown;

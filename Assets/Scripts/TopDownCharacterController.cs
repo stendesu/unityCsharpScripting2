@@ -25,6 +25,7 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] GameObject m_bulletPrefab;
     [SerializeField] Transform m_firePoint;
     [SerializeField] float m_projectileSpeed;
+    public float currentHp, maxHp = 100.0f;
 
     Vector3 mousePointOnScreen;
 
@@ -43,7 +44,7 @@ public class TopDownCharacterController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        
+        currentHp = maxHp;
     }
 
     /// <summary>
@@ -73,13 +74,25 @@ public class TopDownCharacterController : MonoBehaviour
         mousePointOnScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);   
     }
 
+    private void checkIfDead()
+    {
+        if (currentHp <= 0)
+        {
+            Destroy(gameObject); return;
+        }
+    }
+
+    public void takeDamage(float damage)
+    {
+        currentHp -= damage;
+        checkIfDead();
+    }
+
     /// <summary>
     /// When the update loop is called, it runs every frame, ca run more or less frequently depending on performance. Used to catch changes in variables or input.
     /// </summary>
     private void Update()
     {
-
-
         getMousePos();
 
         // read input from WASD keys
