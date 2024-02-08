@@ -64,11 +64,9 @@ public class TopDownCharacterController : MonoBehaviour
         {
             mousePointOnScreen.z = 0;
             Vector2 shootDir = (mousePointOnScreen - transform.position).normalized;
-
+            Debug.Log("Start direction:" + shootDir);
             bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(shootDir * m_projectileSpeed, ForceMode2D.Impulse);
         }
-
-
     }
     void getMousePos()
     {
@@ -80,6 +78,8 @@ public class TopDownCharacterController : MonoBehaviour
     /// </summary>
     private void Update()
     {
+
+
         getMousePos();
 
         // read input from WASD keys
