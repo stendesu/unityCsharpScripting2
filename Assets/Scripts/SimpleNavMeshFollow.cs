@@ -59,7 +59,6 @@ public class SimpleNavMeshFollow : MonoBehaviour
                 sprite.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
         }
-
     }
 
     public void takeDamage(float damage)
@@ -114,11 +113,9 @@ public class SimpleNavMeshFollow : MonoBehaviour
             if (!afterAttack)   //  actual attack event
             {
                 GameObject spawnProjectile = Instantiate(bulletPrefab, projectileSpawnPos.transform.position, Quaternion.identity);
-                Debug.Log("attacked");
                 canAttack = false;
                 Vector2 shootDir = (m_target.position - projectileSpawnPos.transform.position).normalized;
                 spawnProjectile.GetComponent<Rigidbody2D>().AddForce(shootDir * projectileSpeed, ForceMode2D.Impulse);
-
 
                 afterAttack = true;
                 calledDelay = false;
