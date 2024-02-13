@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TopDownCharacterController : MonoBehaviour
 {
@@ -78,6 +79,7 @@ public class TopDownCharacterController : MonoBehaviour
     {
         if (currentHp <= 0)
         {
+            SceneManager.LoadScene("UI_Death", LoadSceneMode.Additive);
             Destroy(gameObject); return;
         }
     }
