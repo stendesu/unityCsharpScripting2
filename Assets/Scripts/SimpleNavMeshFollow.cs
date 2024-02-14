@@ -41,11 +41,13 @@ public class SimpleNavMeshFollow : MonoBehaviour
         {
             float randRange = Random.Range(5f, 8f);
             stopDistance = randRange;
+            m_agent.stoppingDistance = stopDistance;
         }
         else
         {
-            float randRange = Random.Range(3f, 4f);
+            float randRange = Random.Range(2f, 3f);
             stopDistance = randRange;
+            m_agent.stoppingDistance = stopDistance;
         }
     }
 
@@ -197,7 +199,6 @@ public class SimpleNavMeshFollow : MonoBehaviour
     void Start()
     {
         m_agent = GetComponent<NavMeshAgent>();
-        m_agent.stoppingDistance = stopDistance;
         currentHp = maxHp;
         checkEnemyType();
         updateSprite();
