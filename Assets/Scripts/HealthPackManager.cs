@@ -19,9 +19,18 @@ public class HealthPackManager : MonoBehaviour
                 {
                     if (collider.gameObject.tag == "Player")
                     {
-                        playerScript.takeDamage(healAmount);
+                        if (playerScript.currentHp + healAmount >= playerScript.maxHp)
+                        {
+                            playerScript.takeDamage(healAmount);
 
-                        death();
+                            death();
+                        }
+                        else
+                        {
+                            playerScript.currentHp = playerScript.maxHp;
+
+                            death();
+                        }
                     }
                 }
             }

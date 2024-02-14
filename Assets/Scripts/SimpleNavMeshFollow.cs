@@ -17,6 +17,7 @@ public class SimpleNavMeshFollow : MonoBehaviour
     public Sprite targetSprite;
     public GameObject enemySprite;
     public SpriteRenderer spriteRenderer;
+    public ScoreSystem scoreSystem;
 
     public bool isMelee = false;
 
@@ -67,6 +68,8 @@ public class SimpleNavMeshFollow : MonoBehaviour
         if (currentHp <= 0)
         {
             m_enemyStates = EnemyState.Death;
+            //scoreSystemObject.GetComponent("ScoreSystem");
+            scoreSystem.AddScore(3);
         }
     }
 
@@ -158,7 +161,8 @@ public class SimpleNavMeshFollow : MonoBehaviour
         m_agent.stoppingDistance = stopDistance;
         currentHp = maxHp;
         checkEnemyType();
-        updateSprite(); 
+        updateSprite();
+        scoreSystem = GameObject.Find("ScoreSystemObject").GetComponent<ScoreSystem>();
     }
 
 

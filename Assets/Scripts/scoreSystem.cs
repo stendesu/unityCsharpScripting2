@@ -15,12 +15,12 @@ public class ScoreSystem : MonoBehaviour
         score += scoreToAdd;
     }
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        Button btn = AddScoreButton.GetComponent<Button>();
+        //Button btn = AddScoreButton.GetComponent<Button>();
         
-        AddScoreButton.onClick.AddListener(handleOnClick);
+        //AddScoreButton.onClick.AddListener(handleOnClick);
     }
 
     public void handleOnClick()
