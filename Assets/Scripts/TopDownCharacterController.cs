@@ -27,6 +27,7 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] Transform m_firePoint;
     [SerializeField] float m_projectileSpeed;
     public float currentHp, maxHp = 100.0f;
+    bool canShoot = true;
 
     Vector3 mousePointOnScreen;
 
@@ -60,16 +61,29 @@ public class TopDownCharacterController : MonoBehaviour
 
     void Fire()
     {
-        GameObject bulletToSpawn = Instantiate(m_bulletPrefab, transform.position, Quaternion.identity);
-
-        if (bulletToSpawn.GetComponent<Rigidbody2D>() != null)
+        if (canShoot)
         {
-            mousePointOnScreen.z = 0;
-            Vector2 shootDir = (mousePointOnScreen - transform.position).normalized;
-            Debug.Log("Start direction:" + shootDir);
-            bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(shootDir * m_projectileSpeed, ForceMode2D.Impulse);
+            GameObject bulletToSpawn = Instantiate(m_bulletPrefab, transform.position, Quaternion.identity);
+
+            if (bulletToSpawn.GetComponent<Rigidbody2D>() != null)
+            {
+
+                canShoot = false;
+                mousePointOnScreen.z = 0;
+                Vector2 shootDir = (mousePointOnScreen - transform.position).normalized;
+                bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(shootDir * m_projectileSpeed, ForceMode2D.Impulse);
+                StartCoroutine(setAtkCooldown(0.1f));
+            }
         }
+
     }
+
+    private IEnumerator setAtkCooldown (float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        canShoot = true;
+    }
+
     void getMousePos()
     {
         mousePointOnScreen = Camera.main.ScreenToWorldPoint(Input.mousePosition);   
@@ -128,7 +142,7 @@ public class TopDownCharacterController : MonoBehaviour
         }
 
         // Was the fire button pressed (mapped to Left mouse button or gamepad trigger)
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
             Fire();
             
