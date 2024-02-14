@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,8 @@ public class SimpleNavMeshFollow : MonoBehaviour
     public GameObject enemySprite;
     public SpriteRenderer spriteRenderer;
     public ScoreSystem scoreSystem;
+    public GameObject sword;
+    private bool faceRight;
 
     public bool isMelee = false;
 
@@ -53,10 +56,12 @@ public class SimpleNavMeshFollow : MonoBehaviour
         {
             if (m_target.transform.position.x > transform.position.x)
             {
+                faceRight = true;
                 sprite.transform.localEulerAngles = new Vector3(0, 180, 0);
             }
             else
             {
+                faceRight = false;
                 sprite.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
         }
@@ -105,28 +110,58 @@ public class SimpleNavMeshFollow : MonoBehaviour
         
     }
 
+    private Animator swordAnim;
+
     private void attack()
     {
         bool canAttack = true;
 
         if (Vector2.Distance(transform.position, m_target.position) <= m_agent.stoppingDistance && canAttack)
         {
-            // attack once
-            bool afterAttack = false;
-            if (!afterAttack)   //  actual attack event
+            if (isMelee)
             {
-                GameObject spawnProjectile = Instantiate(bulletPrefab, projectileSpawnPos.transform.position, Quaternion.identity);
-                canAttack = false;
-                Vector2 shootDir = (m_target.position - projectileSpawnPos.transform.position).normalized;
-                spawnProjectile.GetComponent<Rigidbody2D>().AddForce(shootDir * projectileSpeed, ForceMode2D.Impulse);
+                bool afterAttack = false;
+                // attack once
+                if (faceRight)
+                {
+                    if (!afterAttack)   //  melee attack right side
+                    {
+                        GameObject spawnSword = Instantiate(sword, projectileSpawnPos.transform.position, Quaternion.identity);
+                        canAttack = false;
+                        swordAnim = spawnSword.GetComponent<Animator>();
+                        //swordAnim.SetBool("faceRight", faceRight);
+                        swordAnim.Play("swordSwingAnimRight");
 
-                afterAttack = true;
-                calledDelay = false;
-                m_enemyStates = EnemyState.AtkOnCooldown;
+                        afterAttack = true;
+                        calledDelay = false;
+                        m_enemyStates = EnemyState.AtkOnCooldown;
+                        
+                    }
+                }
+                else    //  melee attack left side
+                {
+
+                }
+            }
+            else
+            {
+                // attack once
+                bool afterAttack = false;
+                if (!afterAttack)   //  actual attack event
+                {
+                    GameObject spawnProjectile = Instantiate(bulletPrefab, projectileSpawnPos.transform.position, Quaternion.identity);
+                    canAttack = false;
+                    Vector2 shootDir = (m_target.position - projectileSpawnPos.transform.position).normalized;
+                    spawnProjectile.GetComponent<Rigidbody2D>().AddForce(shootDir * projectileSpeed, ForceMode2D.Impulse);
+
+                    afterAttack = true;
+                    calledDelay = false;
+                    m_enemyStates = EnemyState.AtkOnCooldown;
+                }
             }
         }
     }
-        
+
     private void AtkCooldown()
     {
         if (!calledDelay)
@@ -134,7 +169,7 @@ public class SimpleNavMeshFollow : MonoBehaviour
             calledDelay = true;
             GetComponent<NavMeshAgent>().isStopped = true;
             float randRange = Random.Range(0.8f, 3.2f);
-            StartCoroutine (SetAtkCooldown(randRange));
+            StartCoroutine(SetAtkCooldown(randRange));
         }
 
     }
@@ -146,6 +181,10 @@ public class SimpleNavMeshFollow : MonoBehaviour
         yield return new WaitForSeconds(atkDelay);
         //Debug.Log("yielded");
         m_enemyStates = EnemyState.MoveToPlayer;
+        if (isMelee)
+        {
+
+        }
     }
 
     private void updateSprite()
