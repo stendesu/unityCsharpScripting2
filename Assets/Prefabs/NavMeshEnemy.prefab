@@ -405,6 +405,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   scoreSystem: {fileID: 0}
   sword: {fileID: 2027315930456724497, guid: e7d81b84ce3834c43b09ea3992a12ccd, type: 3}
+  applePrefab: {fileID: 8046757370963126078, guid: 08601babce0517e48a475fbc954e0a75, type: 3}
   isMelee: 0
   m_enemyStates: 0
 --- !u!114 &-9177458077019642930

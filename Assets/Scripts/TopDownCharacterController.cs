@@ -28,6 +28,7 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] float m_projectileSpeed;
     public float currentHp, maxHp = 100.0f;
     bool canShoot = true;
+    public bool canSwing = false;
 
     Vector3 mousePointOnScreen;
 
@@ -75,7 +76,33 @@ public class TopDownCharacterController : MonoBehaviour
                 StartCoroutine(setAtkCooldown(0.1f));
             }
         }
+    }
 
+    public GameObject swordPrefab;
+
+    void swingSword()
+    {
+        if (canSwing)
+        {
+            GameObject spawnSword = Instantiate(swordPrefab, transform.position, Quaternion.identity);
+            canSwing = false;
+            if (Input.GetKeyDown(KeyCode.A))    //  swing left
+            {
+
+                StartCoroutine(swingCooldown(0.6f));
+            }
+            if (Input.GetKeyDown(KeyCode.D))    //  swing right
+            {
+
+                StartCoroutine(swingCooldown(0.6f));
+            }
+        }
+    }
+
+    private IEnumerator swingCooldown(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        canSwing = true;
     }
 
     private IEnumerator setAtkCooldown (float duration)
@@ -145,7 +172,11 @@ public class TopDownCharacterController : MonoBehaviour
         if (Input.GetButton("Fire1"))
         {
             Fire();
-            
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            swingSword();
         }
 
 

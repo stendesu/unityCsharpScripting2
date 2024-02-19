@@ -21,6 +21,9 @@ public class SimpleNavMeshFollow : MonoBehaviour
     public ScoreSystem scoreSystem;
     public GameObject sword;
     private bool faceRight;
+    public GameObject applePrefab;
+    public GameObject specialDrop;
+    public bool canSpecialDrop = false;
 
     public bool isMelee = false;
 
@@ -74,15 +77,24 @@ public class SimpleNavMeshFollow : MonoBehaviour
         currentHp -= damage;
         if (currentHp <= 0)
         {
-            m_enemyStates = EnemyState.Death;
-            //scoreSystemObject.GetComponent("ScoreSystem");
+            float dropChance = Random.Range(0f, 1f);
+            Debug.Log(dropChance);
+            if (dropChance >= 0.5f)
+            {
+                Instantiate(applePrefab, transform.position, Quaternion.identity);
+            }
             scoreSystem.AddScore(3);
+            m_enemyStates = EnemyState.Death;
         }
     }
 
     #region enemy states
     private void death()
     {
+        if (canSpecialDrop)
+        {
+            Instantiate(specialDrop, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 
