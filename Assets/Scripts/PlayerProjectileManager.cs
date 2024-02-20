@@ -76,11 +76,11 @@ public class PlayerProjectileManager : MonoBehaviour
         }
         else if (collider.gameObject.TryGetComponent<BoxCollider2D>(out BoxCollider2D enemyHitBox)) // get enemy hit box (box collider)
         {
-            if (collider == enemyHitBox)    // check for enemy hit box
+            if (collider == enemyHitBox)    // check for enemy hit box*
             {
                 if (collider.gameObject.TryGetComponent<SimpleNavMeshFollow>(out SimpleNavMeshFollow enemyComponent))   // get enemy script to deal damage
                 {
-                    if (collider.gameObject.tag == "Enemy") //  ensures that it is an enemy
+                    if (collider.gameObject.tag == "Enemy") //  ensures that it is an enemy *
                     {
                         enemyComponent.takeDamage(projectileDmg);
 

@@ -143,7 +143,6 @@ public class SimpleNavMeshFollow : MonoBehaviour
                         GameObject spawnSword = Instantiate(sword, projectileSpawnPos.transform.position, Quaternion.identity);
                         canAttack = false;
                         swordAnim = spawnSword.GetComponent<Animator>();
-                        //swordAnim.SetBool("faceRight", faceRight);
                         swordAnim.Play("swordSwingAnimRight");
 
                         afterAttack = true;
@@ -154,7 +153,18 @@ public class SimpleNavMeshFollow : MonoBehaviour
                 }
                 else    //  melee attack left side
                 {
+                    if (!afterAttack)   //  melee attack right side
+                    {
+                        GameObject spawnSword = Instantiate(sword, projectileSpawnPos.transform.position, Quaternion.identity);
+                        canAttack = false;
+                        swordAnim = spawnSword.GetComponent<Animator>();
+                        swordAnim.Play("swordSwingAnim");
 
+                        afterAttack = true;
+                        calledDelay = false;
+                        m_enemyStates = EnemyState.AtkOnCooldown;
+
+                    }
                 }
             }
             else

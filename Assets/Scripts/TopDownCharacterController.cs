@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -79,30 +80,58 @@ public class TopDownCharacterController : MonoBehaviour
     }
 
     public GameObject swordPrefab;
+    private Animator swordAnim;
+    bool calledSwingDelay = false;
 
     void swingSword()
     {
         if (canSwing)
         {
-            GameObject spawnSword = Instantiate(swordPrefab, transform.position, Quaternion.identity);
-            canSwing = false;
-            if (Input.GetKeyDown(KeyCode.A))    //  swing left
+            if (playerDirection.x < 0)    //  swing left
             {
+                Vector3 spawnPos = transform.position + new Vector3 (-3, 0, 0);
+                GameObject spawnSword = Instantiate(swordPrefab, spawnPos, Quaternion.identity);
+                spawnSword.GetComponent<PlayerSwordManager>();
 
+                canSwing = false;
+                swordAnim = spawnSword.GetComponent<Animator>();
+                swordAnim.Play("swordSwingAnim");
+                calledSwingDelay = false;
                 StartCoroutine(swingCooldown(0.6f));
             }
-            if (Input.GetKeyDown(KeyCode.D))    //  swing right
+            else if (playerDirection.x > 0)    //  swing right
             {
-
+                Vector3 spawnPos = transform.position + new Vector3(3, 0, 0);
+                GameObject spawnSword = Instantiate(swordPrefab, spawnPos, Quaternion.identity);
+                canSwing = false;
+                swordAnim = spawnSword.GetComponent<Animator>();
+                swordAnim.Play("swordSwingAnimRight");
+                calledSwingDelay = false;
                 StartCoroutine(swingCooldown(0.6f));
             }
+            else    //  swing left if X = 0
+            {
+                Vector3 spawnPos = transform.position + new Vector3(-3, 0, 0);
+                GameObject spawnSword = Instantiate(swordPrefab, spawnPos, Quaternion.identity);
+                canSwing = false;
+                swordAnim = spawnSword.GetComponent<Animator>();
+                swordAnim.Play("swordSwingAnim");
+                calledSwingDelay = false;
+                StartCoroutine(swingCooldown(0.6f));
+            }
+
         }
     }
 
     private IEnumerator swingCooldown(float duration)
     {
-        yield return new WaitForSeconds(duration);
-        canSwing = true;
+        if (!calledSwingDelay) 
+        { 
+            yield return new WaitForSeconds(duration);
+            calledSwingDelay = true;
+            canSwing = true;
+        }
+
     }
 
     private IEnumerator setAtkCooldown (float duration)

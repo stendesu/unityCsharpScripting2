@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: -2968571875232970565}
   - component: {fileID: -9177458077019642930}
   - component: {fileID: 352290358471439393}
+  - component: {fileID: 5989153349005648056}
   m_Layer: 0
   m_Name: NavMeshEnemy
   m_TagString: Enemy
@@ -406,6 +407,8 @@ MonoBehaviour:
   scoreSystem: {fileID: 0}
   sword: {fileID: 2027315930456724497, guid: e7d81b84ce3834c43b09ea3992a12ccd, type: 3}
   applePrefab: {fileID: 8046757370963126078, guid: 08601babce0517e48a475fbc954e0a75, type: 3}
+  specialDrop: {fileID: 0}
+  canSpecialDrop: 0
   isMelee: 0
   m_enemyStates: 0
 --- !u!114 &-9177458077019642930
@@ -465,6 +468,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
+--- !u!50 &5989153349005648056
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5377811418319204792}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 500
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5465797754245208561
 GameObject:
   m_ObjectHideFlags: 0
