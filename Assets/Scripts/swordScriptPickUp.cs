@@ -18,6 +18,8 @@ public class swordScriptPickUp : MonoBehaviour
                     if (collider.gameObject.tag == "Player")
                     {
                         playerScript.canSwing = true;
+
+                        Destroy(gameObject);
                     }
                 }
             }

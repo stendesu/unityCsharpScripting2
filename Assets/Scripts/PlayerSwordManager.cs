@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerSwordManager : MonoBehaviour
 {
-    int swordDamage = 45;
+    int swordDamage = 175;
     public BoxCollider2D boxCollider;
     public GameObject player;
 

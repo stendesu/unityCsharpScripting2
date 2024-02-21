@@ -324,7 +324,7 @@ MonoBehaviour:
   m_projectileSpeed: 45
   currentHp: 0
   maxHp: 100
-  canSwing: 1
+  canSwing: 0
   swordPrefab: {fileID: 2027315930456724497, guid: 797778e0fb9b3fe4499dafdc9ba8b95b, type: 3}
 --- !u!50 &5880630718165958540
 Rigidbody2D:

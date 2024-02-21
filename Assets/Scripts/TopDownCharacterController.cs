@@ -89,7 +89,7 @@ public class TopDownCharacterController : MonoBehaviour
         {
             if (playerDirection.x < 0)    //  swing left
             {
-                Vector3 spawnPos = transform.position + new Vector3 (-3, 0, 0);
+                Vector3 spawnPos = transform.position + new Vector3 (-1, 0, 0);
                 GameObject spawnSword = Instantiate(swordPrefab, spawnPos, Quaternion.identity);
                 spawnSword.GetComponent<PlayerSwordManager>();
 
@@ -101,7 +101,7 @@ public class TopDownCharacterController : MonoBehaviour
             }
             else if (playerDirection.x > 0)    //  swing right
             {
-                Vector3 spawnPos = transform.position + new Vector3(3, 0, 0);
+                Vector3 spawnPos = transform.position + new Vector3(1, 0, 0);
                 GameObject spawnSword = Instantiate(swordPrefab, spawnPos, Quaternion.identity);
                 canSwing = false;
                 swordAnim = spawnSword.GetComponent<Animator>();
@@ -111,7 +111,7 @@ public class TopDownCharacterController : MonoBehaviour
             }
             else    //  swing left if X = 0
             {
-                Vector3 spawnPos = transform.position + new Vector3(-3, 0, 0);
+                Vector3 spawnPos = transform.position + new Vector3(-1, 0, 0);
                 GameObject spawnSword = Instantiate(swordPrefab, spawnPos, Quaternion.identity);
                 canSwing = false;
                 swordAnim = spawnSword.GetComponent<Animator>();
