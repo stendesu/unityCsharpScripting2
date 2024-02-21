@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class SimpleNavMeshFollow : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class SimpleNavMeshFollow : MonoBehaviour
     public GameObject applePrefab;
     public GameObject specialDrop;
     public bool canSpecialDrop = false;
+    public bool isBoss = false;
 
     public bool isMelee = false;
 
@@ -94,6 +96,10 @@ public class SimpleNavMeshFollow : MonoBehaviour
         if (canSpecialDrop)
         {
             Instantiate(specialDrop, transform.position, Quaternion.identity);
+        }
+        if (isBoss)
+        {
+            SceneManager.LoadScene("UI_Win", LoadSceneMode.Single);
         }
         Destroy(gameObject);
     }
