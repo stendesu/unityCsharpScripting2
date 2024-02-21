@@ -325,7 +325,9 @@ MonoBehaviour:
   currentHp: 0
   maxHp: 100
   canSwing: 0
+  canAxe: 1
   swordPrefab: {fileID: 2027315930456724497, guid: 797778e0fb9b3fe4499dafdc9ba8b95b, type: 3}
+  axePrefab: {fileID: 110897320048399504, guid: b62c6b569a2e6df44bac70e3a5a5b556, type: 3}
 --- !u!50 &5880630718165958540
 Rigidbody2D:
   serializedVersion: 4

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,6 +31,7 @@ public class TopDownCharacterController : MonoBehaviour
     public float currentHp, maxHp = 100.0f;
     bool canShoot = true;
     public bool canSwing = false;
+    public bool canAxe = false;
 
     Vector3 mousePointOnScreen;
 
@@ -78,7 +80,7 @@ public class TopDownCharacterController : MonoBehaviour
             }
         }
     }
-
+    
     public GameObject swordPrefab;
     private Animator swordAnim;
     bool calledSwingDelay = false;
@@ -120,6 +122,51 @@ public class TopDownCharacterController : MonoBehaviour
                 StartCoroutine(swingCooldown(0.6f));
             }
 
+        }
+    }
+
+    public GameObject axePrefab;
+    private Animator axeAnim;
+    bool calledAxeDelay = false;
+    bool returnAxe = false;
+
+
+    void throwAxe()
+    {
+        if (canAxe)
+        {
+            canAxe = false;
+            //Vector3 spawnPos = transform.position + new Vector3 (0, 0, 0);
+            GameObject SpawnAxe = Instantiate(axePrefab, transform.position, Quaternion.identity);
+            ThrowAxeScript axeScript = SpawnAxe.GetComponent<ThrowAxeScript>();
+
+            // lerp axe to mouse pos
+            mousePointOnScreen.z = 0;
+            axeScript.targetLocation = mousePointOnScreen;
+            axeScript.goToTarget();
+
+            //axeScript.returnLocation = transform.position;
+
+            Debug.Log("PlayerLocation = " + transform.position);
+            Debug.Log("AxeReturnLocation = " + axeScript.returnLocation);
+
+            // anim control
+            axeAnim = SpawnAxe.GetComponent<Animator>();
+            axeAnim.Play("AxeThrow");
+
+            // cooldown
+            calledAxeDelay = false;
+            StartCoroutine(axeCooldown(0.9f));
+        }
+    }
+
+    private IEnumerator axeCooldown(float duration)
+    {
+        if (!calledAxeDelay)
+        {
+            yield return new WaitForSeconds(duration);
+            calledAxeDelay = true;
+            canAxe = true;
         }
     }
 
@@ -206,6 +253,11 @@ public class TopDownCharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             swingSword();
+        }
+
+        if (Input.GetKeyDown (KeyCode.Q)) 
+        {
+            throwAxe();
         }
 
 
