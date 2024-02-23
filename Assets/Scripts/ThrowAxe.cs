@@ -17,7 +17,11 @@ public class ThrowAxeScript : MonoBehaviour
 
     private void dealDamage(Collider2D collider)
     {
-        if (collider.gameObject.TryGetComponent<BoxCollider2D>(out BoxCollider2D enemyHitBox)) // get enemy hit box (box collider)
+        if (collider.gameObject.tag == "Wall")
+        {
+            secondAtk = true;
+        }
+        else if (collider.gameObject.TryGetComponent<BoxCollider2D>(out BoxCollider2D enemyHitBox)) // get enemy hit box (box collider)
         {
             if (collider == enemyHitBox)    // check for enemy hit box*
             {
@@ -52,7 +56,7 @@ public class ThrowAxeScript : MonoBehaviour
     {
         if (!secondAtk)            // lerp position to target location
         {
-            transform.position = Vector3.Lerp(transform.position, targetLocation, Time.deltaTime * speed);
+            transform.position = Vector2.MoveTowards(transform.position, targetLocation, Time.deltaTime * speed);
         }
     }
 
@@ -62,7 +66,7 @@ public class ThrowAxeScript : MonoBehaviour
         {
             player = GameObject.Find("character");
             returnLocation = player.transform.position;
-            transform.position = Vector3.Lerp(transform.position, returnLocation, Time.deltaTime * speed);
+            transform.position = Vector2.MoveTowards(transform.position, returnLocation, Time.deltaTime * speed);
             if (transform.position == returnLocation)
             {
                 Destroy(gameObject);
@@ -82,12 +86,5 @@ public class ThrowAxeScript : MonoBehaviour
             secondAtk = true;
 
         }
-
-        Debug.Log("target location = " + targetLocation);
-        Debug.Log("current location = " + transform.position);
-        Debug.Log("return location = " + returnLocation);
-        Debug.Log("player location = " + player.transform.position);
-
-
     }
 }
