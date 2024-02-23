@@ -91,9 +91,6 @@ public class TopDownCharacterController : MonoBehaviour
         if (canDagger)
         {
             GameObject spawnDagger = Instantiate(daggerPrefab, transform.position, Quaternion.identity);
-            //VampDagger daggerScript = spawnDagger.GetComponent<VampDagger>();
-
-            //daggerScript.target.position = mousePointOnScreen;
 
             if (spawnDagger.GetComponent<Rigidbody2D>() != null)
             {
@@ -236,6 +233,8 @@ public class TopDownCharacterController : MonoBehaviour
         checkIfDead();
     }
 
+    public Vector3 mousePos;
+
     /// <summary>
     /// When the update loop is called, it runs every frame, ca run more or less frequently depending on performance. Used to catch changes in variables or input.
     /// </summary>
@@ -313,7 +312,7 @@ public class TopDownCharacterController : MonoBehaviour
             equippedWeapon = "VampireDagger";
         }
 
-
+        mousePos = mousePointOnScreen;
 
 
     }

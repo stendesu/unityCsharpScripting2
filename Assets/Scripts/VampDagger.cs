@@ -12,17 +12,19 @@ public class VampDagger : MonoBehaviour
     public Transform target;
     public GameObject player;
     public TopDownCharacterController playerScript;
+    int maxTargetHit = 0;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
-        Vector3 relativePos = target.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(relativePos, target.position);
-        transform.rotation = rotation;
-
         player = GameObject.Find("character");
         playerScript = player.GetComponent<TopDownCharacterController>();
+
+        Vector3 Look = transform.InverseTransformPoint(playerScript.mousePos);
+        float Angle = Mathf.Atan2(Look.y , Look.x) * Mathf.Rad2Deg - 90;
+
+        transform.Rotate(0, 0, Angle);
+
 
     }
 
@@ -30,7 +32,9 @@ public class VampDagger : MonoBehaviour
     {
         if (collider.gameObject.tag == "Wall")  // check for wall
         {
-            death();
+            spawnImpactParticle();
+
+            Destroy(gameObject);
 
         }
         else if (collider.gameObject.TryGetComponent<BoxCollider2D>(out BoxCollider2D enemyHitBox)) // get enemy hit box (box collider)
@@ -43,9 +47,10 @@ public class VampDagger : MonoBehaviour
                     {
                         enemyComponent.takeDamage(DaggerDamage);
 
-
                         float healReturn = (DaggerDamage / 2) / -1;
                         playerScript.takeDamage(healReturn);
+
+                        maxTargetHit += 1;
 
                         death();
                     }
@@ -64,13 +69,10 @@ public class VampDagger : MonoBehaviour
     {
         spawnImpactParticle();
 
-        //Destroy(gameObject);
-    }
+        if (maxTargetHit >= 3)
+        {
+            Destroy(gameObject);
+        }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

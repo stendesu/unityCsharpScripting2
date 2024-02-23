@@ -685,6 +685,7 @@ GameObject:
   - component: {fileID: 5238600441341773595}
   - component: {fileID: 4295582707639108700}
   - component: {fileID: 7294405448911666978}
+  - component: {fileID: 7594192750813280593}
   m_Layer: 0
   m_Name: VampireDagger
   m_TagString: Untagged
@@ -770,6 +771,9 @@ MonoBehaviour:
   Colldier: {fileID: 5238600441341773595}
   par_daggerImpact: {fileID: 3069115895719343958, guid: 42567ce64b3dbb0479b8f7637a3a852d, type: 3}
   rb: {fileID: 7294405448911666978}
+  target: {fileID: 0}
+  player: {fileID: 0}
+  playerScript: {fileID: 0}
 --- !u!50 &7294405448911666978
 Rigidbody2D:
   serializedVersion: 4
@@ -797,6 +801,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7594192750813280593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4284015205872990819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 539cac862c332994cb1ff25245636a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4961729211546855422
 GameObject:
   m_ObjectHideFlags: 0
