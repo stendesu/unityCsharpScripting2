@@ -128,8 +128,6 @@ public class TopDownCharacterController : MonoBehaviour
     public GameObject axePrefab;
     private Animator axeAnim;
     bool calledAxeDelay = false;
-    bool returnAxe = false;
-
 
     void throwAxe()
     {
@@ -143,12 +141,12 @@ public class TopDownCharacterController : MonoBehaviour
             // lerp axe to mouse pos
             mousePointOnScreen.z = 0;
             axeScript.targetLocation = mousePointOnScreen;
-            axeScript.goToTarget();
+
 
             //axeScript.returnLocation = transform.position;
 
-            Debug.Log("PlayerLocation = " + transform.position);
-            Debug.Log("AxeReturnLocation = " + axeScript.returnLocation);
+            //Debug.Log("PlayerLocation = " + transform.position);
+            //Debug.Log("AxeReturnLocation = " + axeScript.returnLocation);
 
             // anim control
             axeAnim = SpawnAxe.GetComponent<Animator>();
@@ -158,6 +156,11 @@ public class TopDownCharacterController : MonoBehaviour
             calledAxeDelay = false;
             StartCoroutine(axeCooldown(0.9f));
         }
+    }
+
+    void updateReturnPos(ThrowAxeScript axeScript)
+    {
+        axeScript.returnLocation = transform.position;
     }
 
     private IEnumerator axeCooldown(float duration)
@@ -259,6 +262,7 @@ public class TopDownCharacterController : MonoBehaviour
         {
             throwAxe();
         }
+        //updateReturnPos();
 
 
 

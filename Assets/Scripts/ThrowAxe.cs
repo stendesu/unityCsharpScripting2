@@ -11,12 +11,9 @@ public class ThrowAxeScript : MonoBehaviour
     bool canAtk = true;
     bool secondAtk = false;
     public BoxCollider2D colldier;
-    float speed = 5.0f;
+    float speed = 35.0f;
 
-    private void destroy()
-    {
-        Destroy(gameObject);
-    }
+
 
     private void dealDamage(Collider2D collider)
     {
@@ -59,24 +56,37 @@ public class ThrowAxeScript : MonoBehaviour
         }
     }
 
-    public void returnToPlayer(Vector3 playerLocation)
+    public void returnToPlayer()
     {
         if (secondAtk)
         {
-            transform.position = Vector3.Lerp(transform.position, playerLocation, Time.deltaTime * speed);
+            player = GameObject.Find("character");
+            returnLocation = player.transform.position;
+            transform.position = Vector3.Lerp(transform.position, returnLocation, Time.deltaTime * speed);
+            if (transform.position == returnLocation)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        goToTarget();
+
+        returnToPlayer();
+
         if (transform.position == targetLocation)
         {
             secondAtk = true;
+
         }
 
-        
-
+        Debug.Log("target location = " + targetLocation);
+        Debug.Log("current location = " + transform.position);
+        Debug.Log("return location = " + returnLocation);
+        Debug.Log("player location = " + player.transform.position);
 
 
     }
