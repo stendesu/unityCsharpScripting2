@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class VampDagger : MonoBehaviour
 {
-    private float DaggerDamage = 35.0f;
+    private float DaggerDamage = 36.0f;
     public BoxCollider2D Colldier;
     [SerializeField] private GameObject par_daggerImpact;
     [SerializeField] private Rigidbody2D rb;
@@ -47,16 +47,30 @@ public class VampDagger : MonoBehaviour
                     {
                         enemyComponent.takeDamage(DaggerDamage);
 
-                        float healReturn = (DaggerDamage / 2) / -1;
-                        playerScript.takeDamage(healReturn);
+                        float healReturn = (DaggerDamage / 2) / -1; //  calculate heal amount
+                        float healResult = (healReturn / -1) + playerScript.currentHp;
 
-                        maxTargetHit += 1;
-
+                        if (healResult >= playerScript.maxHp)
+                        {
+                            playerScript.currentHp = playerScript.maxHp;    //  if heal amount + current hp is greater than max hp to PREVENT exceeding hp bar
+                        }
+                        else
+                        {
+                            playerScript.takeDamage(healReturn);
+                        }
+                        
+                        maxTargetHit += 1;  //  confirm target hit
                         death();
                     }
                 }
             }
         }
+    }
+
+    private void Update()
+    {
+        //Debug.Log("player current hp - " + playerScript.currentHp);
+        //Debug.Log("player max hp - " + playerScript.maxHp);
     }
 
     private void spawnImpactParticle()
