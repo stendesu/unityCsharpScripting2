@@ -32,6 +32,7 @@ public class TopDownCharacterController : MonoBehaviour
     bool canShoot = true;
     public bool canSwing = false;
     public bool canAxe = false;
+    public string equippedWeapon = "gun";
 
     Vector3 mousePointOnScreen;
 
@@ -77,6 +78,30 @@ public class TopDownCharacterController : MonoBehaviour
                 Vector2 shootDir = (mousePointOnScreen - transform.position).normalized;
                 bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(shootDir * m_projectileSpeed, ForceMode2D.Impulse);
                 StartCoroutine(setAtkCooldown(0.1f));
+            }
+        }
+    }
+
+    bool canDagger = true;
+    public GameObject daggerPrefab;
+    float DaggerSpeed = 60.0f;
+
+    void ThrowDagger()
+    {
+        if (canDagger)
+        {
+            GameObject spawnDagger = Instantiate(daggerPrefab, transform.position, Quaternion.identity);
+            //VampDagger daggerScript = spawnDagger.GetComponent<VampDagger>();
+
+            //daggerScript.target.position = mousePointOnScreen;
+
+            if (spawnDagger.GetComponent<Rigidbody2D>() != null)
+            {
+                canDagger = false;
+                mousePointOnScreen.z = 0;
+                Vector2 shootDir = (mousePointOnScreen - transform.position).normalized;
+                spawnDagger.GetComponent<Rigidbody2D>().AddForce(shootDir * DaggerSpeed, ForceMode2D.Impulse);
+                StartCoroutine(setDaggerCooldown(0.4f));
             }
         }
     }
@@ -158,11 +183,6 @@ public class TopDownCharacterController : MonoBehaviour
         }
     }
 
-    void updateReturnPos(ThrowAxeScript axeScript)
-    {
-        axeScript.returnLocation = transform.position;
-    }
-
     private IEnumerator axeCooldown(float duration)
     {
         if (!calledAxeDelay)
@@ -188,6 +208,12 @@ public class TopDownCharacterController : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         canShoot = true;
+    }
+
+    private IEnumerator setDaggerCooldown(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        canDagger = true;
     }
 
     void getMousePos()
@@ -250,7 +276,21 @@ public class TopDownCharacterController : MonoBehaviour
         // Was the fire button pressed (mapped to Left mouse button or gamepad trigger)
         if (Input.GetButton("Fire1"))
         {
-            Fire();
+            if (equippedWeapon == "gun")
+            {
+                if (Input.GetButton("Fire1"))
+                {
+                    Fire();
+                }
+            }
+            else if (equippedWeapon == "VampireDagger")
+            {
+                if (Input.GetButton("Fire1"))
+                {
+                    ThrowDagger();
+
+                }
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -262,7 +302,17 @@ public class TopDownCharacterController : MonoBehaviour
         {
             throwAxe();
         }
-        //updateReturnPos();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            equippedWeapon = "gun";
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            equippedWeapon = "VampireDagger";
+        }
+
 
 
 

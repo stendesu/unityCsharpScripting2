@@ -326,6 +326,8 @@ MonoBehaviour:
   maxHp: 100
   canSwing: 0
   canAxe: 1
+  equippedWeapon: gun
+  daggerPrefab: {fileID: 4284015205872990819, guid: f4d5e799d5ebe8c47b9b44619397b9b4, type: 3}
   swordPrefab: {fileID: 2027315930456724497, guid: 797778e0fb9b3fe4499dafdc9ba8b95b, type: 3}
   axePrefab: {fileID: 110897320048399504, guid: b62c6b569a2e6df44bac70e3a5a5b556, type: 3}
 --- !u!50 &5880630718165958540

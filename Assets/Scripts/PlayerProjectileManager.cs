@@ -10,23 +10,23 @@ public class PlayerProjectileManager : MonoBehaviour
     [SerializeField] private GameObject par_projectileImpact;
 
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private int maxBounces = 3;
+    //[SerializeField] private int maxBounces = 3;
 
-    private Vector3 lastVelocity;
-    private int bounces = 0;
-    private Vector3 startLocation;
-    private Vector3 endLocation;
-    private bool bounced = false;
+    //private Vector3 lastVelocity;
+    //private int bounces = 0;
+    //private Vector3 startLocation;
+    //private Vector3 endLocation;
+    //private bool bounced = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        startLocation = transform.position;
+        //startLocation = transform.position;
     }
 
     void Update()
     {
-        lastVelocity = rb.velocity;
+        //lastVelocity = rb.velocity;
 
     }
     /*
@@ -37,33 +37,35 @@ public class PlayerProjectileManager : MonoBehaviour
 */
 
     //  projectile bounce attempts
-    private void bounceEvent()
-    {
-        if (!bounced)
-        {
-            startLocation.z = 0;
-            endLocation.z = 0;  
+    //private void bounceEvent()
+    //{
+    //    if (!bounced)
+    //    {
+    //        startLocation.z = 0;
+    //        endLocation.z = 0;  
 
-            Vector2 nextDir = (startLocation - endLocation).normalized;
-            Debug.Log("bounce direction: " + nextDir);
-            GetComponent<Rigidbody2D>().AddForce((nextDir * -1) * 45, ForceMode2D.Impulse);
-            bounces++;
-            startLocation = endLocation;
-            bounced = true;
-        }
+    //        Vector2 nextDir = (startLocation - endLocation).normalized;
+    //        Debug.Log("bounce direction: " + nextDir);
+    //        GetComponent<Rigidbody2D>().AddForce((nextDir * -1) * 45, ForceMode2D.Impulse);
+    //        bounces++;
+    //        startLocation = endLocation;
+    //        bounced = true;
+    //    }
 
 
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        var speed = lastVelocity.magnitude;
-        var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
+    //}
 
-        Debug.Log("initiating velocity");
-        rb.velocity = direction * Mathf.Max(speed, 0f);
-        bounces++;
 
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    var speed = lastVelocity.magnitude;
+    //    var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
+
+    //    Debug.Log("initiating velocity");
+    //    rb.velocity = direction * Mathf.Max(speed, 0f);
+    //    bounces++;
+
+    //}
 
 
 

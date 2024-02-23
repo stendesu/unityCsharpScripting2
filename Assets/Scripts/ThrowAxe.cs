@@ -43,10 +43,6 @@ public class ThrowAxeScript : MonoBehaviour
         {
             dealDamage(collider);
 
-            if (secondAtk)
-            {
-                dealDamage(collider);
-            }
         }
 
     }
