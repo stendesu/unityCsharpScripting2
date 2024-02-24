@@ -6,7 +6,7 @@ public class EnemySpawnerManager : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public bool allow = false;
-    bool canSpawn = false;
+    bool canSpawn = true;
     bool calledCooldown = false;
     public Sprite[] enemySprites;
 
@@ -18,10 +18,12 @@ public class EnemySpawnerManager : MonoBehaviour
 
     void spawnEnemy()
     {
-        float chance = Random.Range(0, 1);
         if (canSpawn)
         {
-            Vector3 randomPos = transform.position + new Vector3(Random.Range(45, -45), Random.Range(45, -45), 0);
+            Vector3 randomPos = transform.position + new Vector3(Random.Range(30, -30), Random.Range(30, -30), 0);
+            float chance = Random.Range(0, 1);
+            GameObject player = GameObject.Find("character");
+
             if (chance <= 0.5)  //  spawn ranged enemies
             {
                 GameObject enemy = Instantiate(enemyPrefab, randomPos, Quaternion.identity);
@@ -30,6 +32,7 @@ public class EnemySpawnerManager : MonoBehaviour
                 enemyScript.isMelee = false;
                 enemyScript.maxHp = Random.Range(300, 500);
                 enemyScript.targetSprite = enemySprites[Random.Range(0, 6)];
+                enemyScript.m_target = player.transform;
                 StartCoroutine(spawnCooldown(Random.Range(5, 9)));
             }
             else   //   spawn close ranged enemies
@@ -40,6 +43,7 @@ public class EnemySpawnerManager : MonoBehaviour
                 enemyScript.isMelee = true;
                 enemyScript.maxHp = Random.Range(300, 500);
                 enemyScript.targetSprite = enemySprites[Random.Range(0, 6)];
+                enemyScript.m_target = player.transform;
                 StartCoroutine(spawnCooldown(Random.Range(5, 9)));
             }
 
@@ -65,6 +69,9 @@ public class EnemySpawnerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (allow)
+        {
+            spawnEnemy();
+        }
     }
 }
