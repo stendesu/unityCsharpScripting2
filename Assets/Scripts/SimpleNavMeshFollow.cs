@@ -99,7 +99,7 @@ public class SimpleNavMeshFollow : MonoBehaviour
         }
         if (isBoss)
         {
-            SceneManager.LoadScene("UI_Win", LoadSceneMode.Single);
+            SceneManager.LoadScene("UI_Win", LoadSceneMode.Additive);
         }
         Destroy(gameObject);
     }
