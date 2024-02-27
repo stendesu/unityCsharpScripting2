@@ -24,5 +24,6 @@ public class RespawnButton : MonoBehaviour
     {
         SceneManager.LoadScene("Level1", LoadSceneMode.Single);
         SceneManager.LoadScene("UI", LoadSceneMode.Additive);
+        SceneManager.LoadScene("UI_WeaponHotbar", LoadSceneMode.Additive);
     }
 }
