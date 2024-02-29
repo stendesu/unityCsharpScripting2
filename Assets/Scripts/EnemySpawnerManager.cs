@@ -20,7 +20,7 @@ public class EnemySpawnerManager : MonoBehaviour
     {
         if (canSpawn)
         {
-            Vector3 randomPos = transform.position + new Vector3(Random.Range(30, -30), Random.Range(30, -30), 0);
+            Vector3 randomPos = transform.position + new Vector3(Random.Range(20, -20), Random.Range(20, -20), 0);
             float chance = Random.Range(0, 1);
             GameObject player = GameObject.Find("character");
 
@@ -44,7 +44,7 @@ public class EnemySpawnerManager : MonoBehaviour
                 enemyScript.maxHp = Random.Range(300, 500);
                 enemyScript.targetSprite = enemySprites[Random.Range(0, 6)];
                 enemyScript.m_target = player.transform;
-                StartCoroutine(spawnCooldown(Random.Range(5, 9)));
+                StartCoroutine(spawnCooldown(Random.Range(1 , 3)));
             }
 
             canSpawn = false;
