@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UI_WeaponHotbar.unity
     guid: f86607eacc291f247a0d84fd56913163
+  - enabled: 1
+    path: Assets/Scenes/UI_PauseMenu.unity
+    guid: 324c48631604ba047941e8554ebd8609
   m_configObjects: {}

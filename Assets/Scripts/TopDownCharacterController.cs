@@ -314,6 +314,17 @@ public class TopDownCharacterController : MonoBehaviour
 
         mousePos = mousePointOnScreen;
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameObject pauseManager = GameObject.Find("pauseMenuManager");
+            pauseMenuManager pauseMgrScript = pauseManager.GetComponent<pauseMenuManager>();
+
+            if (!pauseMgrScript.paused)
+            {
+                pauseMgrScript.activateCanvas();
+            }
+
+        }
 
     }
 

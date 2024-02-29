@@ -80,7 +80,6 @@ public class SimpleNavMeshFollow : MonoBehaviour
         if (currentHp <= 0)
         {
             float dropChance = Random.Range(0f, 1f);
-            Debug.Log(dropChance);
             if (dropChance >= 0.5f)
             {
                 Instantiate(applePrefab, transform.position, Quaternion.identity);

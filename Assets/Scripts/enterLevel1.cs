@@ -12,6 +12,7 @@ public class enterLevel1 : MonoBehaviour
             SceneManager.LoadScene("Level1", LoadSceneMode.Single);
             SceneManager.LoadScene("UI", LoadSceneMode.Additive);
             SceneManager.LoadScene("UI_WeaponHotbar", LoadSceneMode.Additive);
+            SceneManager.LoadScene("UI_PauseMenu", LoadSceneMode.Additive);
         }
 
     }

@@ -61,12 +61,16 @@ public class ThrowAxeScript : MonoBehaviour
         if (secondAtk)
         {
             player = GameObject.Find("character");
-            returnLocation = player.transform.position;
-            transform.position = Vector2.MoveTowards(transform.position, returnLocation, Time.deltaTime * speed);
-            if (transform.position == returnLocation)
+            if (player != null)
             {
-                Destroy(gameObject);
+                returnLocation = player.transform.position;
+                transform.position = Vector2.MoveTowards(transform.position, returnLocation, Time.deltaTime * speed);
+                if (transform.position == returnLocation)
+                {
+                    Destroy(gameObject);
+                }
             }
+
         }
     }
 

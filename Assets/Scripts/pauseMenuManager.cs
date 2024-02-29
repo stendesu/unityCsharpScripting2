@@ -15,11 +15,25 @@ public class pauseMenuManager : MonoBehaviour
     public Button mainMenuButton;
     public Button backButton;
     public GameObject canvas;
+    public bool paused = false;
 
-    public void LoadLevel1()
+    public void deactivateCanvas()
     {
-        SceneManager.LoadScene("Level0", LoadSceneMode.Additive);
         canvas.SetActive(false);
+        paused = false;
+        Time.timeScale = 1;
+    }
+
+    public void activateCanvas()
+    {
+        canvas.SetActive(true);
+        paused = true;
+        Time.timeScale = 0;
+    }
+
+    public void loadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     public void OpenAndCloseSettingsPanel()
@@ -44,9 +58,11 @@ public class pauseMenuManager : MonoBehaviour
 
     void Start()
     {
-        resumeButton.onClick.AddListener(LoadLevel1);
+        deactivateCanvas();
+        resumeButton.onClick.AddListener(deactivateCanvas);
         controlsButton.onClick.AddListener(OpenAndCloseSettingsPanel);
         quitButton.onClick.AddListener(Quit);
         backButton.onClick.AddListener(OpenAndCloseSettingsPanel);
+        mainMenuButton.onClick.AddListener(loadMainMenu);
     }
 }
