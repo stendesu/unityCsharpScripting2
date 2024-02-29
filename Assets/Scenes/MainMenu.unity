@@ -4156,7 +4156,7 @@ MonoBehaviour:
     - Throw Axe
 
 
-    1, 2, 3... - Switch Weapons
+    1, 2 - Switch Weapons
 
 '
   m_isRightToLeft: 0
