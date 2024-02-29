@@ -18,10 +18,13 @@ public class EnemySpawnerManager : MonoBehaviour
 
     void spawnEnemy()
     {
+        Debug.Log(canSpawn);
         if (canSpawn)
         {
+            
             Vector3 randomPos = transform.position + new Vector3(Random.Range(20, -20), Random.Range(20, -20), 0);
             float chance = Random.Range(0, 1);
+            Debug.Log(chance);
             GameObject player = GameObject.Find("character");
 
             if (chance <= 0.5)  //  spawn ranged enemies
@@ -33,7 +36,9 @@ public class EnemySpawnerManager : MonoBehaviour
                 enemyScript.maxHp = Random.Range(300, 500);
                 enemyScript.targetSprite = enemySprites[Random.Range(0, 6)];
                 enemyScript.m_target = player.transform;
-                StartCoroutine(spawnCooldown(Random.Range(5, 9)));
+                canSpawn = false;
+                calledCooldown = true;
+                StartCoroutine(spawnCooldown(Random.Range(3, 9)));
             }
             else   //   spawn close ranged enemies
             {
@@ -44,11 +49,11 @@ public class EnemySpawnerManager : MonoBehaviour
                 enemyScript.maxHp = Random.Range(300, 500);
                 enemyScript.targetSprite = enemySprites[Random.Range(0, 6)];
                 enemyScript.m_target = player.transform;
-                StartCoroutine(spawnCooldown(Random.Range(1 , 3)));
+                canSpawn = false;
+                calledCooldown = true;
+                StartCoroutine(spawnCooldown(Random.Range(3 , 9)));
             }
 
-            canSpawn = false;
-            calledCooldown = true;
         }
     }
 
