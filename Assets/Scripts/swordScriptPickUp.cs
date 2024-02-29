@@ -19,6 +19,9 @@ public class swordScriptPickUp : MonoBehaviour
                     {
                         playerScript.canSwing = true;
 
+                        GameObject lockIcon = GameObject.Find("swordLock");
+
+                        Destroy(lockIcon);
                         Destroy(gameObject);
                     }
                 }
