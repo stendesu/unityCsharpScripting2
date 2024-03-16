@@ -74,7 +74,6 @@ public class PlayerProjectileManager : MonoBehaviour
         if (collider.gameObject.tag == "Wall")  // check for wall
         {
             death();
-
         }
         else if (collider.gameObject.TryGetComponent<BoxCollider2D>(out BoxCollider2D enemyHitBox)) // get enemy hit box (box collider)
         {
